@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>幸运合集</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, sans-serif; -webkit-tap-highlight-color: transparent; }
+    /* 1️⃣ iOS 标准的浅灰清爽底色 */
+body { 
+    background-color: #f2f2f7; 
+    color: #1c1c1e; 
+    display: flex; 
+    justify-content: center; 
+    min-height: 100vh; 
+}
+.phone-container { 
+    width: 100%; 
+    max-width: 480px; 
+    background: #f2f2f7; 
+    min-height: 100vh; 
+    padding: 14px; 
+    display: flex; 
+    flex-direction: column; 
+    gap: 12px; 
+    position: relative; 
+}
+
+/* 2️⃣ 顶部文字：深邃黑与质感灰 */
+.brand-info .title { font-size: 18px; font-weight: 700; color: #1c1c1e !important; }
+.brand-info .domain { font-size: 11px; color: #8e8e93 !important; }
+
+/* 3️⃣ App Store 同款纯白卡片（完美包容所有白底图片） */
+.app-card { 
+    background-color: #ffffff !important; 
+    border-radius: 16px !important;
+    border: none !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05) !important; /* 极轻的微阴影，很有空气感 */
+}
+.app-name { color: #1c1c1e !important; font-weight: 600; }
+.app-sub { color: #8e8e93 !important; font-size: 12px; }
+
+/* 4️⃣ 分类菜单：iOS 经典的滑块胶囊质感 */
+.tabs-container { 
+    background-color: rgba(118, 118, 128, 0.12) !important; 
+    border-radius: 12px !important;
+    padding: 2px !important;
+}
+.tab { color: #3a3a3c !important; }
+.tab.active { 
+    background-color: #ffffff !important; /* 选中的标签像按钮一样凸显出来 */
+    color: #1c1c1e !important; /* 纯黑字 */
+    font-weight: bold;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1) !important;
+}
+        .header-left { display: flex; align-items: center; gap: 10px; }
+        .brand-info .title { font-size: 18px; font-weight: 700; color: #111; }
+        .brand-info .domain { font-size: 11px; color: #777; font-weight: bold; }
+        .banner { width: 100%; height: 135px; background: linear-gradient(100deg, #0d1527 0%, #172237 100%); border-radius: 16px; display: flex; align-items: center; padding: 0 20px; position: relative; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .banner-content { color: white; z-index: 2; }
+        .banner-tag { background: rgba(59, 130, 246, 0.2); border: 1px solid #3b82f6; color: #60a5fa; font-size: 10px; padding: 1px 5px; border-radius: 4px; display: inline-block; margin-bottom: 4px; }
+        .banner-title { font-size: 22px; font-weight: 800; letter-spacing: 1px; }
+        .banner-subtitle { font-size: 18px; color: #94a3b8; font-weight: bold; }
+        .banner::after { content: "🎰"; position: absolute; right: 15px; font-size: 75px; opacity: 0.25; }
+        .pg-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .pg-btn { background-color: #1c1c1e; border-radius: 14px; height: 54px; display: flex; justify-content: center; align-items: center; font-size: 16px; font-weight: bold; color: white; box-shadow: 0 4px 8px rgba(0,0,0,0.05); }
+        .pg-btn .p { color: #64b5f6; } .pg-btn .g { color: #f06292; } .pg-btn .text { color: #ffe082; margin-left: 4px; }
+        .notice-bar { background-color: #3a3a3c; color: #fff; border-radius: 12px; padding: 10px 14px; display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 500; }
+        .tabs-container { background-color: #fff; padding: 5px; border-radius: 14px; display: flex; gap: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.01); }
+        .tab { flex: 1; text-align: center; padding: 11px 0; font-size: 14px; font-weight: bold; color: #8e8e93; border-radius: 10px; cursor: pointer; }
+        .tab.active { background-color: #1c1c1e; color: #fff; }
+        .app-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .app-card { background-color: #fff; border-radius: 16px; padding: 12px; display: flex; gap: 10px; position: relative; box-shadow: 0 2px 8px rgba(0,0,0,0.02); align-items: center; border: 1px solid #f0f0f2; }
+        .app-logo { width: 55px; height: 55px; border-radius: 12px; object-fit: cover; flex-shrink: 0; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .app-info { display: flex; flex-direction: column; justify-content: space-between; flex: 1; min-width: 0; height: 55px; }
+        .app-name { font-size: 14px; font-weight: bold; color: #111; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .app-sub { font-size: 11px; color: #8e8e93; margin-top: 1px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .btn-open { background-color: #1c1c1e; color: #fff; padding: 4px 0; border-radius: 6px; font-size: 11px; font-weight: bold; text-align: center; text-decoration: none; display: block; width: 68px; margin-top: auto; }
+    </style>
+</head>
+<body>
+
+<div class="phone-container" id="mainContainer">
+    <div class="header" style="display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; background: #121212; border-bottom: 1px solid #1a1a1a; border-radius: 12px 12px 0 0;">
+        <div class="header-left" style="display: flex; align-items: center; gap: 10px;">
+            <div style="background: #e61919; color:white; width:42px; height:42px; border-radius:50%; display:flex; justify-content:center; align-items:center; font-weight:bold; font-size:20px;">幸</div>
+            <div class="brand-info" style="display: flex; flex-direction: column;">
+                <div class="title" style="font-size: 16px; font-weight: bold; color: #ffffff;">幸运合集</div>
+                <div class="domain" style="font-size: 10px; color: #888888;"></div>
+            </div>
+        </div>
+        <div class="header-right" style="display: flex; gap: 8px;">
+            <button onclick="openKefuModal()" style="display: flex; align-items: center; gap: 4px; background: #222222; color: #ffffff; border: none; padding: 6px 12px; border-radius: 20px; font-size: 13px; cursor: pointer; font-weight: bold;">💬 联系客服</button>
+            <button onclick="openShareModal()" style="display: flex; align-items: center; gap: 4px; background: #222222; color: #ffffff; border: none; padding: 6px 12px; border-radius: 20px; font-size: 13px; cursor: pointer; font-weight: bold;">🔄 分享</button>
+        </div>
+    </div>
+
+    <div id="kefuModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.75); z-index: 9999; justify-content: center; align-items: center;" onclick="closeKefuModal(event)">
+        <div style="background: #1e1e1e; border: 1px solid #2d2d2d; width: 90%; max-width: 360px; border-radius: 16px; padding: 20px; box-sizing: border-box; position: relative; max-height: 85vh; overflow-y: auto;">
+            <button style="position: absolute; top: 12px; right: 16px; background: none; border: none; color: #888; font-size: 22px; cursor: pointer;" onclick="document.getElementById('kefuModal').style.display='none'">×</button>
+            <div style="font-size: 18px; font-weight: bold; color: #fff; margin-bottom: 16px; text-align: center;">幸运合集客服</div>
+            <div style="background: #2b2b2b; border-radius: 12px; padding: 14px; margin-bottom: 12px;">
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;"><span style="font-size: 24px;">✈️</span><div><div style="color: #fff; font-weight: bold; font-size: 14px;">Telegram客服</div><div style="color: #888; font-size: 11px;">24小时在线支持</div></div></div>
+                <div style="display: flex; justify-content: space-between; align-items: center; background: #1e1e1e; padding: 8px 12px; border-radius: 8px;"><span style="color: #fff; font-size: 13px;">@chijibaa</span><button style="background: #fff; color: #000; border: none; padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: bold; cursor: pointer;" onclick="copyText('@chijibaa')">复制</button></div>
+            </div>
+            <div style="background: #2b2b2b; border-radius: 12px; padding: 14px; margin-bottom: 12px;">
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;"><span style="font-size: 24px;">💬</span><div><div style="color: #fff; font-weight: bold; font-size: 14px;">旺商聊客服</div><div style="color: #888; font-size: 11px;">24小时在线支持</div></div></div>
+                <div style="display: flex; justify-content: space-between; align-items: center; background: #1e1e1e; padding: 8px 12px; border-radius: 8px;"><span style="color: #fff; font-size: 13px;">166225576</span><button style="background: #fff; color: #000; border: none; padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: bold; cursor: pointer;" onclick="copyText('166225576')">复制</button></div>
+            </div>
+            <div style="background: #2b2b2b; border-radius: 12px; padding: 14px;">
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;"><span style="font-size: 24px;">🟢</span><div><div style="color: #fff; font-weight: bold; font-size: 14px;">微信客服</div><div style="color: #888; font-size: 11px;">添加时请备注来意</div></div></div>
+                <div style="display: flex; justify-content: space-between; align-items: center; background: #1e1e1e; padding: 8px 12px; border-radius: 8px;"><span style="color: #fff; font-size: 13px;"></span><button style="background: #fff; color: #000; border: none; padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: bold; cursor: pointer;" onclick="copyText('')">复制</button></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="shareModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.75); z-index: 9999; justify-content: center; align-items: center;" onclick="closeShareModal(event)">
+        <div style="background: #1e1e1e; border: 1px solid #2d2d2d; width: 85%; max-width: 340px; border-radius: 16px; padding: 24px; box-sizing: border-box; position: relative;">
+            <button style="position: absolute; top: 12px; right: 16px; background: none; border: none; color: #888; font-size: 22px; cursor: pointer;" onclick="document.getElementById('shareModal').style.display='none'">×</button>
+            <div style="font-size: 16px; font-weight: bold; color: #fff; margin-bottom: 16px;">分享幸运合集</div>
+            <div style="display: flex; background: #2b2b2b; border-radius: 8px; padding: 4px; margin-bottom: 20px; align-items: center;">
+                <input type="text" id="shareInput" readonly style="flex: 1; background: none; border: none; color: #fff; padding: 8px; font-size: 14px; outline: none;">
+                <button style="background: #ffffff; color: #000000; border: none; padding: 6px 16px; border-radius: 6px; font-size: 13px; cursor: pointer; font-weight: bold;" onclick="copyLink()">复制</button>
+            </div>
+            <div style="font-size: 12px; color: #666; margin-bottom: 12px;">分享到</div>
+            <div style="display: flex; justify-content: space-between; text-align: center; font-size: 11px; color: #aaa;">
+                <div style="flex: 1; cursor: pointer;" onclick="shareToApp('QQ')"><div style="width: 44px; height: 44px; border-radius: 50%; background: #2b2b2b; display: flex; justify-content: center; align-items: center; font-size: 18px; margin: 0 auto 6px;">🐧</div>QQ</div>
+                <div style="flex: 1; cursor: pointer;" onclick="shareToApp('微信')"><div style="width: 44px; height: 44px; border-radius: 50%; background: #2b2b2b; display: flex; justify-content: center; align-items: center; font-size: 18px; margin: 0 auto 6px;">💬</div>微信</div>
+                <div style="flex: 1; cursor: pointer;" onclick="shareToApp('电报')"><div style="width: 44px; height: 44px; border-radius: 50%; background: #2b2b2b; display: flex; justify-content: center; align-items: center; font-size: 18px; margin: 0 auto 6px;">✈️</div>电报</div>
+                <div style="flex: 1; cursor: pointer;" onclick="shareToApp('更多')"><div style="width: 44px; height: 44px; border-radius: 50%; background: #2b2b2b; display: flex; justify-content: center; align-items: center; font-size: 18px; margin: 0 auto 6px;">···</div>更多</div>
+            </div>
+        </div>
+    </div>
+
+    <div style="width: 100%; overflow: hidden; border-radius: 16px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+    <img src="banner.gif" style="width: 100%; display: block;" alt="秒秒28">
+</div>
+    <div class="pg-buttons">
+        <a href="https://520.mk" target="_blank" style="text-decoration: none; display: block; flex: 1;">
+            <div class="pg-btn"><span class="p">P</span><span class="g">G</span><span class="text">模拟器</span></div>
+        </a>
+        <a href="https://4399.mk" target="_blank" style="text-decoration: none; display: block; flex: 1;">
+            <div class="pg-btn"><span class="p">P</span><span class="g">G</span><span class="text">增加爆率</span></div>
+        </a>
+    </div>
+
+    <div class="notice-bar"><span>📢</span><marquee scrollamount="4">1号聚鑫汇开通充值 周期内充值满700+3000流水即可获得388红包！</marquee></div>
+
+    <div class="tabs-container">
+        <div class="tab active" onclick="switchTab(this, '稳台推荐')">稳台推荐</div>
+        <div class="tab" onclick="switchTab(this, '模拟器')">模拟器</div>
+        <div class="tab" onclick="switchTab(this, '深夜视频')">深夜视频</div>
+    </div>
+
+    <div class="app-grid" id="appGrid"></div>
+</div>
+
+<script>
+    // 1️⃣ 平台核心数据
+    let platforms = [
+        { id: 1, tab: '稳台推荐', name: 'NG28', sub: '十年平台大额无忧', url: 'https://103.54.60.22:8866/#/link?allwin=JelZFpzXt%2BwXiIdBRQbkAg%3D%3D', logo: 'NG28.jpg' },
+        { id: 2, tab: '稳台推荐', name: '28圈', sub: '充值送豪礼', url: 'https://38.181.23.34:60006/#/link?allwin=94QIqK15258846', logo: '28quan.jpg' },
+        { id: 3, tab: '稳台推荐', name: '领航国际', sub: '新台首选推荐', url: 'https://rsesra.hfjcl.com/app/register.php?site_id=1064&pt=DA3E0136-6C0C-8305-7562-2C1389C25AAF', logo: 'linghang.jpg' },
+         { id: 4, tab: '稳台推荐', name: '非凡娱乐', sub: '每日签到领大奖', url: 'https://lncqc.jgqvji.com/app/register.php?site_id=1050&topId=6131763823921237&selfPlanId=5049579', logo: 'ffyl.jpg' },
+         { id: 1, tab: '深夜视频', name: '黑料不打烊', sub: '网红视频', url: 'https://wiki.thridvwtx.cc', logo: 'hl.jpg' }
+    ];
+
+    let currentTab = '稳台推荐';
+
+    window.onload = () => renderPlatforms();
+
+    // 2️⃣ 动态渲染游戏列表
+    function renderPlatforms() {
+        const grid = document.getElementById('appGrid');
+        grid.innerHTML = '';
+        const filtered = platforms.filter(item => item.tab === currentTab);
+        
+        if(filtered.length === 0) {
+            grid.innerHTML = '<div style="grid-column:span 2;text-align:center;color:#999;padding:30px;font-size:13px;">该板块暂无平台</div>';
+            return;
+        }
+
+        filtered.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'app-card';
+            const logoSrc = item.logo || 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50"><rect width="50" height="50" fill="%23ccc"/></svg>';
+            card.innerHTML = `
+                <img class="app-logo" src="${logoSrc}">
+                <div class="app-info">
+                    <div>
+                        <div class="app-name">${item.name}</div>
+                        <div class="app-sub">${item.sub}</div>
+                    </div>
+                    <a href="${item.url}" target="_blank" class="btn-open">🗗 立即打开</a>
+                </div>
+            `;
+            grid.appendChild(card);
+        });
+    }
+
+    // 3️⃣ 切换分类板块
+    function switchTab(element, tabName) {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        element.classList.add('active');
+        currentTab = tabName;
+        renderPlatforms();
+    }
+
+    // 4️⃣ 客服弹窗控制
+    function openKefuModal() {
+        document.getElementById('kefuModal').style.display = 'flex';
+    }
+    function closeKefuModal(event) {
+        if (event.target.id === 'kefuModal') {
+            document.getElementById('kefuModal').style.display = 'none';
+        }
+    }
+
+    // 5️⃣ 分享弹窗控制
+    function openShareModal() {
+        document.getElementById('shareModal').style.display = 'flex';
+        document.getElementById('shareInput').value = window.location.href;
+    }
+    function closeShareModal(event) {
+        if (event.target.id === 'shareModal') {
+            document.getElementById('shareModal').style.display = 'none';
+        }
+    }
+
+    // 6️⃣ 一键复制核心功能
+    function copyText(text) {
+        if (navigator.clipboard) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert('账号已成功复制: ' + text);
+            }).catch(() => {
+                fallbackCopy(text);
+            });
+        } else {
+            fallbackCopy(text);
+        }
+    }
+
+    // 备用复制（老旧手机兼容）
+    function fallbackCopy(text) {
+        let textArea = document.createElement("textarea");
+        textArea.value = text;
+        document.body.appendChild(textArea);
+        textArea.select();
+        try {
+            document.execCommand('copy');
+            alert('账号已成功复制: ' + text);
+        } catch (err) {
+            alert('复制失败，请手动长按复制');
+        }
+        document.body.removeChild(textArea);
+    }
+
+    // 分享链接输入框旁的复制按钮
+    function copyLink() {
+        let input = document.getElementById('shareInput');
+        copyText(input.value);
+    }
+
+    // 7️⃣ 新增：点击分享图标后的跳转与自动复制逻辑
+    function shareToApp(platform) {
+        let currentUrl = window.location.href; 
+        
+        if (platform === '电报') {
+            // 电报支持直接带链接唤起应用
+            let tgUrl = `https://t.me/share/url?url=${encodeURIComponent(currentUrl)}&text=${encodeURIComponent('幸运合集，最稳的平台推荐！')}`;
+            window.open(tgUrl, '_blank');
+        } else {
+            // QQ、微信、更多：自动把链接写进剪贴板，并弹窗提醒用户长按粘贴
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(currentUrl).then(() => {
+                    alert(`链接已成功复制！快去打开${platform}粘贴发送给好友吧~`);
+                }).catch(() => {
+                    fallbackCopy(currentUrl);
+                });
+            } else {
+                fallbackCopy(currentUrl);
+            }
+        }
+    }
+</script>
+
+</body>
+</html>
